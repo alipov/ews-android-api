@@ -16,7 +16,6 @@ task repackageTask(type: Jar) { repackJar ->
 			taskdef name: "jarjar", classname: "com.tonicsystems.jarjar.JarJarTask", classpath: configurations.jarjar.asPath
 			jarjar(destfile: repackJar.archivePath) {
 				configurations.jarjardeps.each { originalJar ->
-					//println "originalJar: " + originalJar
 					zipfileset(src: originalJar)
 				}
 
@@ -25,7 +24,6 @@ task repackageTask(type: Jar) { repackJar ->
 				rule(pattern: "javax.xml.stream.**", 	result: "android.javax.xml.stream.@1")
 				rule(pattern: "javax.xml.namespace.**", result: "android.javax.xml.namespace.@1")
 				rule(pattern: "javax.naming.**", 		result: "android.javax.naming.@1")
-				//rule(pattern: "java.xml.ws.**", 		result: "android.java.xml.ws.@1")
 				rule(pattern: "javax.xml.bind.**", 		result: "android.javax.xml.bind.@1")
 				rule(pattern: "javax.xml.XMLConstants", 		result: "android.javax.xml.XMLConstants")
 			}
