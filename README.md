@@ -22,7 +22,7 @@ The following command creates a fat jar under ews-android-api/build/libs called 
 
 License
 -------
-[ews-java-api][ews-java-url] is licensed under MIT:
+[ews-java-api][ews-java-license] is licensed under MIT:
 
     The MIT License
     Copyright (c) 2012 Microsoft Corporation
@@ -48,3 +48,4 @@ License
 Check also the licenses of dependency libraries that are bundled into a fat jar.
 
  [ews-java-url]: https://github.com/OfficeDev/ews-java-api
+ [ews-java-license]: https://github.com/OfficeDev/ews-java-api/blob/master/license.txt
