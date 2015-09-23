@@ -1,0 +1,132 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+configurations {
+    jarjar
+	jarjardeps
+}
+
+task repackageTask(type: Jar) { repackJar ->
+		repackJar.baseName = "ews-android-api-repackaged-dependencies"
+
+		doLast() {
+			project.ant {
+				taskdef name: "jarjar", classname: "com.tonicsystems.jarjar.JarJarTask", classpath: configurations.jarjar.asPath
+				jarjar(destfile: repackJar.archivePath) {
+					configurations.jarjardeps.each { originalJar ->
+						//println "originalJar: " + originalJar
+						zipfileset(src: originalJar)
+					}
+
+					rule(pattern: "org.apache.commons.**", 	result: "android.org.apache.commons.@1")
+					rule(pattern: "org.apache.http.**", 	result: "android.org.apache.http.@1")
+					rule(pattern: "javax.xml.stream.**", 	result: "android.javax.xml.stream.@1")
+					rule(pattern: "javax.xml.namespace.**", result: "android.javax.xml.namespace.@1")
+					rule(pattern: "javax.naming.**", 		result: "android.javax.naming.@1")
+					//rule(pattern: "java.xml.ws.**", 		result: "android.java.xml.ws.@1")
+					rule(pattern: "javax.xml.bind.**", 		result: "android.javax.xml.bind.@1")
+					rule(pattern: "javax.xml.XMLConstants", 		result: "android.javax.xml.XMLConstants")
+				}
+			}
+		}
+	}
+
+dependencies {
+	jarjar 'com.googlecode.jarjar:jarjar:1.3'
+	
+	// httpclient and its dependencies
+	jarjardeps("org.apache.httpcomponents:httpclient:4.4.1@jar")
+	jarjardeps("commons-codec:commons-codec:1.9@jar")
+	jarjardeps("org.apache.httpcomponents:httpcore:4.4.1@jar")
+	
+	jarjardeps("org.apache.commons:commons-lang3:3.4@jar")
+	jarjardeps("commons-logging:commons-logging:1.2@jar")
+	
+	jarjardeps("javax.xml.bind:jaxb-api:2.2.11@jar")
+	jarjardeps fileTree(dir: 'libs', include: ['jndi-1.2.1.jar'])
+	
+	// sjsxp and its dependencies
+	jarjardeps("com.sun.xml.stream:sjsxp:1.0.2@jar")
+	jarjardeps fileTree(dir: 'libs', include: ['jsr173_1.0_api.jar'])
+
+	compile(files(repackageTask))
+	compile 'joda-time:joda-time:2.8'
+	
+	//compile fileTree(dir: 'libs', include: ['jndi-1.2.1.jar'])
+	
+	
+	//compile 'org.apache.httpcomponents:httpclient:4.4.1'
+	//compile 'commons-logging:commons-logging:1.2'
+	//compile 'org.apache.commons:commons-lang3:3.4'
+	
+	//compile 'javax.xml.bind:jaxb-api:2.2.11'
+	//compile 'javax.xml:jsr173:1.0'
+	//compile 'com.sun.xml.stream:sjsxp:1.0.2'
+}
+
+jar {
+	dependsOn repackageTask
+	from(zipTree(repackageTask.archivePath)) {
+		include "android/**"
+		include "com/sun/**"
+		include "META-INF/**"
+
+		rename { fileName ->
+			if (fileName.startsWith('javax.xml.stream.')) {
+				return "android.${fileName}"
+			}
+			return fileName
+		}
+	}
+}
+
+//task uberjar(type: Jar) {
+//	dependsOn "classes"
+//    from files(sourceSets.main.output.classesDir)
+//    from configurations.runtime.asFileTree.files.collect { zipTree(it) }
+//
+//    manifest {
+//        attributes 'Main-Class': 'SomeClass'
+//    }
+//}
+
+//task jarjarTask(type: Jar) {
+//	dependsOn "uberjar"
+//	
+//	baseName = uberjar.baseName + "-repacked"
+//	def testFile = archivePath.getPath() + "-test.jar"
+//	
+//	def workingDir = new File('build/intermediates/jarjar');
+//	def inputLibrary = uberjar.archivePath;
+//    def outputLibrary = new File(workingDir, 'classes.jar').getCanonicalFile()
+//	
+//	doLast() {
+//		project.ant {
+//			taskdef name: "jarjar", classname: "com.tonicsystems.jarjar.JarJarTask", classpath: configurations.jarjar.asPath
+//			jarjar(jarfile: outputLibrary) {
+//				println "in taskkkkkkkkkkkkkk"
+//				zipfileset(src: inputLibrary)
+//
+//				rule pattern: 'org.apache.commons.**', 	result: 'android.org.apache.commons.@1'
+//				rule pattern: 'org.apache.http.**', 	result: 'android.org.apache.http.@1'
+//				rule pattern: 'javax.xml.stream.**', 	result: 'android.javax.xml.stream.@1'
+//				rule pattern: 'javax.xml.namespace.**', result: 'android.javax.xml.namespace.@1'
+//				rule pattern: 'javax.naming.**', 		result: 'android.javax.naming.@1'
+//				rule pattern: 'java.xml.ws.**', 		result: 'android.java.xml.ws.@1'
+//				rule pattern: 'javax.xml.bind.**', 		result: 'android.javax.xml.bind.@1'
+//			}
+//		}
+//	}
+//}
+
+//assemble {
+//	dependsOn "jarjarTask"
+//	doLast {
+//		println jar.archivePath
+//		println inputs.files
+//		println outputs.files
+//	}
+//}
+
