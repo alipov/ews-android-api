@@ -27,7 +27,6 @@ task copySources(type: Copy) {
             'javax.xml.namespace':'android.javax.xml.namespace',
             'javax.xml.bind':'android.javax.xml.bind',
             'javax.naming':'android.javax.naming'
-//            'java.xml.ws':'android.java.xml.ws'
     ]
 	
 	def currentFile = ""
