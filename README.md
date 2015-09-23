@@ -6,6 +6,14 @@ For API details, guidelines and examples go to [ews-java-api][ews-java-url].
 
 Building
 --------
+
+Check-out the ews-java-api submodule:
+
+```
+git submodule init
+git submodule update
+```
+
 The following command creates a fat jar under ews-android-api/build/libs called **ews-android-api.jar**.
 
 ```
