@@ -20,6 +20,22 @@ The following command creates a fat jar under ews-android-api/build/libs called 
 ./gradlew copySources ews-android-api:build
 ```
 
+Usage (example)
+---------------
+
+```java
+ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
+ExchangeCredentials credentials = new WebCredentials("emailAddress", "password");
+service.setCredentials(credentials);
+service.setUrl(new URI("http://some-ews-server.com/EWS/Exchange.asmx"));
+
+EmailMessage message = new EmailMessage(service);
+message.getToRecipients().add("administrator@some-ews-server.com");
+message.setSubject("Hello world!");
+message.setBody(MessageBody.getMessageBodyFromText("Sent using the EWS Android API."));
+message.send();
+```
+
 License
 -------
 [ews-java-api][ews-java-license] is licensed under MIT:
