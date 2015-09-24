@@ -22,7 +22,8 @@ The following command creates a fat jar under ews-android-api/build/libs called 
 
 Download
 --------
-
+Not available at this stage.  
+  
 Currently you have to manually build the project, copy the ews-android-api.jar to your module's libs folder and then add those dependencies to your build.gradle script:
 ```groovy
 compile files('libs/ews-android-api.jar')
