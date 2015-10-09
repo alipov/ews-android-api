@@ -26,7 +26,9 @@ task copySources(type: Copy) {
             'javax.xml.stream':'android.javax.xml.stream',
             'javax.xml.namespace':'android.javax.xml.namespace',
             'javax.xml.bind':'android.javax.xml.bind',
-            'javax.naming':'android.javax.naming'
+            'javax.naming':'android.javax.naming',
+            'import javax.xml.ws.http.HTTPException;':'',
+            'HTTPException':'RuntimeException'
     ]
 	
 	def currentFile = ""
