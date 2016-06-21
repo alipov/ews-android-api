@@ -16,7 +16,10 @@ allprojects {
 }
 
 task copySources(type: Copy) {
-    from 'ews-java-api/src/main/java'
+    from ('ews-java-api/src/main/java') {
+        exclude 'microsoft/exchange/webservices/data/dns/DnsClient.java'
+    }
+    from 'patch'
     into 'ews-android-api/src/main/java'
 
     def repackageMap = [
@@ -26,9 +29,13 @@ task copySources(type: Copy) {
             'javax.xml.stream':'android.javax.xml.stream',
             'javax.xml.namespace':'android.javax.xml.namespace',
             'javax.xml.bind':'android.javax.xml.bind',
-            'javax.naming':'android.javax.naming',
             'import javax.xml.ws.http.HTTPException;':'',
-            'HTTPException':'RuntimeException'
+            'HTTPException':'RuntimeException',
+
+            /* We can't use DefaultHostnameVerifier because it uses javax.naming.ldap.LdapName class
+             * in DefaultHostnameVerifier#extractCN method.
+             */
+            'new DefaultHostnameVerifier()':'SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER'
     ]
 	
 	def currentFile = ""

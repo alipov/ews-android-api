@@ -23,7 +23,6 @@ task repackageTask(type: Jar) { repackJar ->
 				rule(pattern: "org.apache.http.**", 	result: "android.org.apache.http.@1")
 				rule(pattern: "javax.xml.stream.**", 	result: "android.javax.xml.stream.@1")
 				rule(pattern: "javax.xml.namespace.**", result: "android.javax.xml.namespace.@1")
-				rule(pattern: "javax.naming.**", 		result: "android.javax.naming.@1")
 				rule(pattern: "javax.xml.bind.**", 		result: "android.javax.xml.bind.@1")
 				rule(pattern: "javax.xml.XMLConstants", 		result: "android.javax.xml.XMLConstants")
 			}
@@ -43,14 +42,14 @@ dependencies {
 	jarjardeps("commons-logging:commons-logging:1.2@jar")
 	
 	jarjardeps("javax.xml.bind:jaxb-api:2.2.11@jar")
-	jarjardeps fileTree(dir: 'libs', include: ['jndi-1.2.1.jar'])
-	
+
 	// sjsxp and its dependencies
 	jarjardeps("com.sun.xml.stream:sjsxp:1.0.2@jar")
 	jarjardeps fileTree(dir: 'libs', include: ['jsr173_1.0_api.jar'])
 
 	compile(files(repackageTask))
 	compile 'joda-time:joda-time:2.8'
+	compile 'dnsjava:dnsjava:2.1.6'
 }
 
 jar {
