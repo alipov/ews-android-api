@@ -21,6 +21,7 @@ task copySources(type: Copy) {
 
     def repackageMap = [
             'org.apache.commons':'android.org.apache.commons',
+            'android.org.apache.commons.io':'org.apache.commons.io',
             'org.apache.http':'android.org.apache.http',
             'NamingEnumeration<?>':'NamingEnumeration',
             'javax.xml.stream':'android.javax.xml.stream',

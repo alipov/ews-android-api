@@ -50,6 +50,7 @@ dependencies {
 	jarjardeps fileTree(dir: 'libs', include: ['jsr173_1.0_api.jar'])
 
 	compile(files(repackageTask))
+	compile 'commons-io:commons-io:+'
 	compile 'joda-time:joda-time:2.8'
 }
 
