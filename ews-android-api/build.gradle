@@ -25,7 +25,10 @@ task repackageTask(type: Jar) { repackJar ->
 				rule(pattern: "javax.xml.namespace.**", result: "android.javax.xml.namespace.@1")
 				rule(pattern: "javax.naming.**", 		result: "android.javax.naming.@1")
 				rule(pattern: "javax.xml.bind.**", 		result: "android.javax.xml.bind.@1")
-				rule(pattern: "javax.xml.XMLConstants", 		result: "android.javax.xml.XMLConstants")
+				rule(pattern: "javax.xml.XMLConstants", result: "android.javax.xml.XMLConstants")
+				rule(pattern: "com.bea.xml.stream.MXParserFactory", result: "com.sun.xml.stream.ZephyrParserFactory") // inputFactory
+				rule(pattern: "com.bea.xml.stream.XMLOutputFactoryBase", result: "com.sun.xml.stream.ZephyrWriterFactory") // outputFactory
+				rule(pattern: "com.bea.xml.stream.EventFactory", result: "com.sun.xml.stream.events.ZephyrEventFactory") // eventFactory
 			}
 		}
 	}

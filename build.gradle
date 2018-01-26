@@ -28,7 +28,10 @@ task copySources(type: Copy) {
             'javax.xml.bind':'android.javax.xml.bind',
             'javax.naming':'android.javax.naming',
             'import javax.xml.ws.http.HTTPException;':'',
-            'HTTPException':'RuntimeException'
+            'HTTPException':'RuntimeException',
+            'XMLInputFactory.newInstance()':'XMLInputFactory.newInstance("android.javax.xml.stream.XMLInputFactory", XMLInputFactory.class.getClassLoader())',
+            'XMLOutputFactory.newInstance()':'android.javax.xml.stream.FixedXMLOutputFactory.newInstance("android.javax.xml.stream.XMLOutputFactory", XMLOutputFactory.class.getClassLoader())',
+            'XMLEventFactory.newInstance()':'XMLEventFactory.newInstance("android.javax.xml.stream.XMLEventFactory", XMLEventFactory.class.getClassLoader())'
     ]
 	
 	def currentFile = ""
