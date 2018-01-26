@@ -54,6 +54,7 @@ dependencies {
 
 	compile(files(repackageTask))
 	compile 'joda-time:joda-time:2.8'
+	compile 'dnsjava:dnsjava:2.1.6'
 }
 
 jar {
