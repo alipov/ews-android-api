@@ -26,8 +26,9 @@ Not available at this stage.
   
 Currently you have to manually build the project, copy the ews-android-api.jar to your module's libs folder and then add those dependencies to your build.gradle script:
 ```groovy
-compile files('libs/ews-android-api.jar')
-compile 'joda-time:joda-time:2.8'
+implementation files('libs/ews-android-api.jar')
+implementation 'joda-time:joda-time:2.8'
+implementation 'dnsjava:dnsjava:2.1.6'
 ```
 
 Usage (example)
