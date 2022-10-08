@@ -31,6 +31,24 @@ implementation 'joda-time:joda-time:2.8'
 implementation 'dnsjava:dnsjava:2.1.6'
 ```
 
+Proguard rules (add them to your app):
+```
+# required in LogFactory#getLog
+-keep class android.org.apache.commons.logging.LogFactory { *; }
+-keep class android.org.apache.commons.logging.impl.LogFactoryImpl { *; }
+
+# required in LogFactoryImpl#discoverLogImplementation / LogFactoryImpl#createLogFromClass
+-keep class android.org.apache.commons.logging.impl.Jdk14Logger { *; }
+
+# required by EwsServiceXmlWriter
+-keep class com.sun.xml.stream.ZephyrWriterFactory { *; }
+# the below classes might be required as well
+-keep class com.sun.xml.stream.ZephyrParserFactory { *; }
+-keep class com.sun.xml.stream.events.ZephyrEventFactory { *; }
+```
+
+
+
 Usage (example)
 ---------------
 
